@@ -115,11 +115,13 @@ if __name__ == '__main__':
     tax_table_dataframe = get_dataframe_from_excel(tax_table_filepath, 'Planilha1')
     base_directory = os.path.dirname(sys.argv[1])
     dataframe = get_dataframe_from_excel(sys.argv[1], 'Lista_Pedidos')
+    dataframe = pandas.merge(left=dataframe, right=tax_table_dataframe, how='left', left_on='Municipio', right_on='MUNICÍPIO')
     dataframe = dataframe[['Contrato', 'Codigo', 'NumeroConformidade',
         'DescricaoServico', 'Quantidade', 'ValorUnitario', 'ValorTotal',
-        'CodigoLeiComp', 'Municipio', 'DomicilioFiscal', 'GrupoComprador',
+        'CodigoLeiComp', 'ALÍQUOTA', 'Municipio', 'DomicilioFiscal', 'GrupoComprador',
         'DescricaoGrupoComprador', 'ProvedorDescricao', 'Posicao', 'CodigoBaremo',
         'DescricaoBaremo', 'CodigoOrdem', 'Estado', 'MotivoRecusa']]
+    dataframe = dataframe.rename(columns={'ALÍQUOTA': 'ISS'})
     base_directory = os.path.join(base_directory, 'AMPLA')
     create_folder_if_not_exist(base_directory)
     base_directory = os.path.join(base_directory, 'COMERCIAL')
