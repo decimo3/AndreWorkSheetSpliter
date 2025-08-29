@@ -124,10 +124,10 @@ if __name__ == '__main__':
     create_folder_if_not_exist(base_directory)
     for x in get_distinct_list_from_dataframe_column(dataframe, 'CodigoLeiComp'):
         dataframe_filterby_codigoleicomp = create_folder_and_place_filtred_dataframe(dataframe, 'CodigoLeiComp', x, base_directory)
-        base_directory1 = os.path.join(base_directory, x)
+        base_directory1 = os.path.join(base_directory, str(x))
         for y in get_distinct_list_from_dataframe_column(dataframe_filterby_codigoleicomp, 'Municipio'):
             dataframe_filterby_municipio = create_folder_and_place_filtred_dataframe(dataframe_filterby_codigoleicomp, 'Municipio', y, base_directory1)
-            base_directory2 = os.path.join(base_directory1, y)
+            base_directory2 = os.path.join(base_directory1, str(y))
             for z in get_distinct_list_from_dataframe_column(dataframe_filterby_municipio, 'NumeroConformidade'):
                 dataframe_filterby_conformidade = create_folder_and_place_filtred_dataframe(dataframe_filterby_municipio, 'NumeroConformidade', z, base_directory2)
     print(f'Relatórios exportados em {base_directory}')
