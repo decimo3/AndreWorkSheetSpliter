@@ -16,9 +16,11 @@ class InvalidFileException(Exception):
 
 def print_center_presentation(text: str, lenght: int) -> None:
     ''' Function to centralize text on defined lenght '''
+    spaces = ((lenght - len(text)) / 2) - 4
     result = '# '
+    result += str(' ' * int(spaces))
     result += text
-    result += str(' ' * (len(result) - (lenght - 4)))
+    result += str(' ' * int(spaces))
     result += ' #'
     print(result)
 
