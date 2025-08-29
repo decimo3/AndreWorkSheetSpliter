@@ -1,0 +1,7 @@
+venv
+dist
+build
+*.pyc
+*.xls
+*.spec
+*.xlsx
