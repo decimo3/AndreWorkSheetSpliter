@@ -98,10 +98,14 @@ def create_folder_and_place_filtred_dataframe(
         dataframe: pandas.DataFrame,
         column_name: str,
         distinct_value: str,
-        directory_path: str
+        directory_path: str,
+        create_directory: bool = True
         ) -> pandas.DataFrame:
     ''' Function to create folder from distinct values and place a filtred dataframe '''
-    folder_path = os.path.join(directory_path, str(distinct_value))
+    if create_directory:
+        folder_path = os.path.join(directory_path, str(distinct_value))
+    else:
+        folder_path = directory_path
     file_path = os.path.join(folder_path, str(distinct_value) + '.xls')
     create_folder_if_not_exist(folder_path)
     dataframe = dataframe[dataframe[column_name] == distinct_value]
@@ -137,6 +141,6 @@ if __name__ == '__main__':
             dataframe_filterby_municipio = create_folder_and_place_filtred_dataframe(dataframe_filterby_codigoleicomp, 'Municipio', y, base_directory1)
             base_directory2 = os.path.join(base_directory1, str(y))
             for z in get_distinct_list_from_dataframe_column(dataframe_filterby_municipio, 'NumeroConformidade'):
-                dataframe_filterby_conformidade = create_folder_and_place_filtred_dataframe(dataframe_filterby_municipio, 'NumeroConformidade', z, base_directory2)
+                dataframe_filterby_conformidade = create_folder_and_place_filtred_dataframe(dataframe_filterby_municipio, 'NumeroConformidade', z, base_directory2, False)
     print(f'Relatórios exportados em {base_directory}')
     input('Pressione qualquer tecla para finalizar.')
