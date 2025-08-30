@@ -66,19 +66,22 @@ def get_dataframe_from_excel(
 
 def export_dataframe_to_xls(
         dataframe: pandas.DataFrame,
-        file_path: str
+        file_path: str,
+        total_value: float
         ) -> None:
     ''' Export a DataFrame to a legacy .xls file using xlwt '''
     print(f'Exportando planilha {file_path}...')
     workbook = xlwt.Workbook()
     sheet = workbook.add_sheet('Planilha1')
+    # Write total
+    sheet.write(0, 6, total_value)
     # Write head
     for col, head in enumerate(dataframe.columns):
-        sheet.write(0, col, head)
+        sheet.write(1, col, head)
     # Write body
     for row_idx, row in enumerate(dataframe.itertuples(index=False), start=1):
         for col_idx, value in enumerate(row):
-            sheet.write(row_idx, col_idx, value)
+            sheet.write(row_idx + 1, col_idx, value)
     workbook.save(file_path)
     print(f'Planilha {file_path} exportada com sucesso!')
 
@@ -102,7 +105,8 @@ def create_folder_and_place_filtred_dataframe(
     file_path = os.path.join(folder_path, str(distinct_value) + '.xls')
     create_folder_if_not_exist(folder_path)
     dataframe = dataframe[dataframe[column_name] == distinct_value]
-    export_dataframe_to_xls(dataframe, file_path)
+    total = dataframe['ValorTotal'].sum(numeric_only=True)
+    export_dataframe_to_xls(dataframe, file_path, total)
     return dataframe
 
 if __name__ == '__main__':
