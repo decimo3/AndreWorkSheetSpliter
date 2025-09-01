@@ -2,6 +2,7 @@
 ''' Module to  '''
 import os
 import sys
+from tkinter import messagebox
 from tkinter import filedialog
 import xlwt
 import pandas
@@ -121,6 +122,16 @@ def create_folder_and_place_filtred_dataframe(
     total = dataframe['ValorTotal'].sum(numeric_only=True)
     export_dataframe_to_xls(dataframe, file_path, total)
     return dataframe
+
+def show_popup_error(message: str) -> None:
+    ''' Function to show a popup message about erros '''
+    print('ERRO: ' + message)
+    messagebox.showerror('Erro!', message=message)
+
+def show_popup_info(message: str) -> None:
+    ''' Function to show a popup message about erros '''
+    print('INFO: ' + message)
+    messagebox.showinfo('Info!', message=message)
 
 if __name__ == '__main__':
     print_header_presentation()
