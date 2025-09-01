@@ -45,7 +45,8 @@ def check_if_folder_or_file_exist(
         ) -> None:
     ''' Function to check if a folder or file exists and raise exception if not '''
     if not os.path.exists(path_find):
-        raise FileNotFoundError(f'O arquivo {path_find} não foi encontrado!')
+        show_popup_error(f'O arquivo {path_find} não foi encontrado!')
+        raise FileNotFoundError()
 
 def create_folder_if_not_exist(
         folder_path: str
@@ -138,7 +139,8 @@ if __name__ == '__main__':
     filepath = sys.argv[1] if len(sys.argv) > 1 else filedialog.askopenfilename()
     check_if_folder_or_file_exist(filepath)
     if not filepath.lower().endswith('.xlsx'):
-        raise InvalidFileException(f'O arquivo {filepath} não é válido!')
+        show_popup_error(f'O arquivo {filepath} não é válido!')
+        raise InvalidFileException()
     tax_table_filepath = os.path.join(BASE_FOLDER, 'ISS.xlsx')
     check_if_folder_or_file_exist(tax_table_filepath)
     tax_table_dataframe = get_dataframe_from_excel(tax_table_filepath, 'Planilha1')
@@ -147,7 +149,8 @@ if __name__ == '__main__':
     dataframe = pandas.merge(left=dataframe, right=tax_table_dataframe, how='left', left_on='Municipio', right_on='MUNICÍPIO')
     dataframe_with_null_values = dataframe[dataframe['ALÍQUOTA'].isnull()]
     if len(dataframe_with_null_values) != 0:
-        raise RelationshipException(f'Há valores nulos no relacionamento!\n{dataframe_with_null_values['Municipio']}')
+        show_popup_error(f'Há valores nulos no relacionamento!\n{dataframe_with_null_values['Municipio']}')
+        raise RelationshipException()
     dataframe = dataframe[['Contrato', 'Codigo', 'NumeroConformidade',
         'DescricaoServico', 'Quantidade', 'ValorUnitario', 'ValorTotal',
         'CodigoLeiComp', 'ALÍQUOTA', 'Municipio', 'DomicilioFiscal', 'GrupoComprador',
@@ -166,5 +169,4 @@ if __name__ == '__main__':
             base_directory2 = os.path.join(base_directory1, str(y))
             for z in get_distinct_list_from_dataframe_column(dataframe_filterby_municipio, 'NumeroConformidade'):
                 dataframe_filterby_conformidade = create_folder_and_place_filtred_dataframe(dataframe_filterby_municipio, 'NumeroConformidade', z, base_directory2, False)
-    print(f'Relatórios exportados em {base_directory}')
-    input('Pressione qualquer tecla para finalizar.')
+    show_popup_info(f'Relatórios exportados em {base_directory}')
