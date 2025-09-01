@@ -127,6 +127,9 @@ if __name__ == '__main__':
     base_directory = os.path.dirname(sys.argv[1])
     dataframe = get_dataframe_from_excel(sys.argv[1], 'Lista_Pedidos')
     dataframe = pandas.merge(left=dataframe, right=tax_table_dataframe, how='left', left_on='Municipio', right_on='MUNICÍPIO')
+    dataframe_with_null_values = dataframe[dataframe['ALÍQUOTA'].isnull()]
+    if len(dataframe_with_null_values) != 0:
+        raise RelationshipException(f'Há valores nulos no relacionamento!\n{dataframe_with_null_values['Municipio']}')
     dataframe = dataframe[['Contrato', 'Codigo', 'NumeroConformidade',
         'DescricaoServico', 'Quantidade', 'ValorUnitario', 'ValorTotal',
         'CodigoLeiComp', 'ALÍQUOTA', 'Municipio', 'DomicilioFiscal', 'GrupoComprador',
