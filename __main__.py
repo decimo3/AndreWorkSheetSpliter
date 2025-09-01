@@ -2,6 +2,7 @@
 ''' Module to  '''
 import os
 import sys
+from tkinter import filedialog
 import xlwt
 import pandas
 import openpyxl
@@ -123,14 +124,15 @@ def create_folder_and_place_filtred_dataframe(
 
 if __name__ == '__main__':
     print_header_presentation()
-    check_if_folder_or_file_exist(sys.argv[1])
-    if not sys.argv[1].lower().endswith('.xlsx'):
-        raise InvalidFileException(f'O arquivo {sys.argv[1]} não é válido!')
+    filepath = sys.argv[1] if len(sys.argv) > 1 else filedialog.askopenfilename()
+    check_if_folder_or_file_exist(filepath)
+    if not filepath.lower().endswith('.xlsx'):
+        raise InvalidFileException(f'O arquivo {filepath} não é válido!')
     tax_table_filepath = os.path.join(BASE_FOLDER, 'ISS.xlsx')
     check_if_folder_or_file_exist(tax_table_filepath)
     tax_table_dataframe = get_dataframe_from_excel(tax_table_filepath, 'Planilha1')
-    base_directory = os.path.dirname(sys.argv[1])
-    dataframe = get_dataframe_from_excel(sys.argv[1], 'Lista_Pedidos')
+    base_directory = os.path.dirname(filepath)
+    dataframe = get_dataframe_from_excel(filepath, 'Lista_Pedidos')
     dataframe = pandas.merge(left=dataframe, right=tax_table_dataframe, how='left', left_on='Municipio', right_on='MUNICÍPIO')
     dataframe_with_null_values = dataframe[dataframe['ALÍQUOTA'].isnull()]
     if len(dataframe_with_null_values) != 0:
