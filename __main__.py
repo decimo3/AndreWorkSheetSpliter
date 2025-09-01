@@ -77,7 +77,12 @@ def export_dataframe_to_xls(
     workbook = xlwt.Workbook()
     sheet = workbook.add_sheet('Planilha1')
     # Write total
-    sheet.write(0, 6, total_value)
+    style = xlwt.XFStyle()
+    pattern = xlwt.Pattern()
+    pattern.pattern = xlwt.Pattern.SOLID_PATTERN
+    pattern.pattern_fore_colour = xlwt.Style.colour_map['yellow']
+    style.pattern = pattern
+    sheet.write(0, 6, total_value, style)
     # Write head
     for col, head in enumerate(dataframe.columns):
         sheet.write(1, col, head)
