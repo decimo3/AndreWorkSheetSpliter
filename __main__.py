@@ -14,6 +14,9 @@ else:
 class InvalidFileException(Exception):
     ''' Custom exception class for specific error handling '''
 
+class RelationshipException(Exception):
+    ''' Custom exception class for relationship issues '''
+
 def print_center_presentation(text: str, lenght: int) -> None:
     ''' Function to centralize text on defined lenght '''
     spaces = ((lenght - len(text)) / 2) - 4
