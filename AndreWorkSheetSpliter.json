@@ -1,0 +1,9 @@
+{
+    "nome": "COMERCIAL",
+    "planilha": "Lista_Pedidos",
+    "colunas": ["Codigo", "Contrato", "DescricaoServico", "GrupoComprador", "DescricaoGrupoComprador", "ProvedorDescricao", "Posicao", "CodigoBaremo", "DescricaoBaremo", "Quantidade", "ValorUnitario", "ValorTotal", "CodigoOrdem", "NumeroConformidade", "Estado", "MotivoRecusa", "DomicilioFiscal", "Municipio", "CodigoLeiComp"],
+    "juncoes": ["Municipio", "MUNICÍPIO"],
+    "colunas_final": ["Contrato", "Codigo", "NumeroConformidade", "DescricaoServico", "Quantidade", "ValorUnitario", "ValorTotal", "CodigoLeiComp", "ALÍQUOTA", "Municipio", "DomicilioFiscal", "GrupoComprador", "DescricaoGrupoComprador", "ProvedorDescricao", "Posicao", "CodigoBaremo", "DescricaoBaremo", "CodigoOrdem", "Estado", "MotivoRecusa"],
+    "criterios": ["CodigoLeiComp", "Municipio", "NumeroConformidade"],
+    "sumarizar": "ValorTotal"
+}
