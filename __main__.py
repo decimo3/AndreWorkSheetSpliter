@@ -134,6 +134,22 @@ def show_popup_info(message: str) -> None:
     print('INFO: ' + message)
     messagebox.showinfo('Info!', message=message)
 
+def recursive_split_and_export(
+        dataframe: pandas.DataFrame,
+        column_names: list,
+        base_directory: str
+    ) -> None:
+    ''' Function to recursively split dataframe and export based on column_names '''
+    if not column_names:
+        return
+    current_column = column_names[0]
+    is_last = len(column_names) == 1
+    distinct_values = get_distinct_list_from_dataframe_column(dataframe, current_column)
+    for value in distinct_values:
+        filtered_df = create_folder_and_place_filtred_dataframe(dataframe, current_column, value, base_directory, create_directory = not is_last)
+        next_directory = os.path.join(base_directory, str(value)) if not is_last else base_directory
+        recursive_split_and_export(filtered_df, column_names[1:], next_directory)
+
 if __name__ == '__main__':
     print_header_presentation()
     filepath = sys.argv[1] if len(sys.argv) > 1 else filedialog.askopenfilename()
@@ -161,12 +177,6 @@ if __name__ == '__main__':
     create_folder_if_not_exist(base_directory)
     base_directory = os.path.join(base_directory, 'COMERCIAL')
     create_folder_if_not_exist(base_directory)
-    for x in get_distinct_list_from_dataframe_column(dataframe, 'CodigoLeiComp'):
-        dataframe_filterby_codigoleicomp = create_folder_and_place_filtred_dataframe(dataframe, 'CodigoLeiComp', x, base_directory)
-        base_directory1 = os.path.join(base_directory, str(x))
-        for y in get_distinct_list_from_dataframe_column(dataframe_filterby_codigoleicomp, 'Municipio'):
-            dataframe_filterby_municipio = create_folder_and_place_filtred_dataframe(dataframe_filterby_codigoleicomp, 'Municipio', y, base_directory1)
-            base_directory2 = os.path.join(base_directory1, str(y))
-            for z in get_distinct_list_from_dataframe_column(dataframe_filterby_municipio, 'NumeroConformidade'):
-                dataframe_filterby_conformidade = create_folder_and_place_filtred_dataframe(dataframe_filterby_municipio, 'NumeroConformidade', z, base_directory2, False)
+    criteria = ['CodigoLeiComp', 'Municipio', 'NumeroConformidade']
+    recursive_split_and_export(dataframe, criteria, base_directory)
     show_popup_info(f'Relatórios exportados em {base_directory}')
