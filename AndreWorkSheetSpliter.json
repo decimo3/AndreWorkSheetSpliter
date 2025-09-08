@@ -1,5 +1,5 @@
-{
-    "COMERCIAL": {
+[
+    {
         "nome": "COMERCIAL",
         "planilha": "Lista_Pedidos",
         "colunas": ["Codigo", "Contrato", "DescricaoServico", "GrupoComprador", "DescricaoGrupoComprador", "ProvedorDescricao", "Posicao", "CodigoBaremo", "DescricaoBaremo", "Quantidade", "ValorUnitario", "ValorTotal", "CodigoOrdem", "NumeroConformidade", "Estado", "MotivoRecusa", "DomicilioFiscal", "Municipio", "CodigoLeiComp"],
@@ -8,7 +8,7 @@
         "criterios": ["CodigoLeiComp", "Municipio", "NumeroConformidade"],
         "sumarizar": "ValorTotal"
     },
-    "CONSTRUCAO": {
+    {
         "nome": "CONSTRUCAO",
         "planilha": "BASE",
         "colunas": ["COD_PARCEIRA", "PARCEIRA", "CONTRATO", "CECO", "AREA", "BASE", "SOB", "ORDEM", "MOTIVO_INVESTIMENTO", "PROJETO_ESPECIAL", "BAREMO", "TEXTO_BREVE", "QUANT", "VALOR_UNIT", "VALOR_TOTAL", "N_MEDICAO", "N_PEDIDO", "DATA_INGRESSO", "NUM_NF", "DATA_VENCIMENTO", "DATA_PAGAMENTO", "DIAS VENCIDOS / DIAS A VENCER", "MUNICIPIO", "TIPO", "N_TAREFA_GOM", "MIGO", "NCM", "GOM/FORAGOM", "DATA_INICIO_OBRA", "DATA_ENVIO_SAP", "MES_INGRESSO", "ANO_INGRESSO", "STATUS_PAGAMENTO", "SITUACAO_PAGAMENTO", "CONFIRMACAO_COMPRA_BAREMADA", "DATA_APTA_FISC"],
@@ -17,4 +17,4 @@
         "criterios": ["NCM", "MUNICIPIO", "MIGO"],
         "sumarizar": "VALOR_TOTAL"
     }
-}
+]
