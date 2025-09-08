@@ -74,7 +74,8 @@ def get_dataframe_from_excel(
 def export_dataframe_to_xls(
         dataframe: pandas.DataFrame,
         file_path: str,
-        total_value: float
+        total_value: float,
+        column_index: int
         ) -> None:
     ''' Export a DataFrame to a legacy .xls file using xlwt '''
     print(f'Exportando planilha {file_path}...')
@@ -86,7 +87,7 @@ def export_dataframe_to_xls(
     pattern.pattern = xlwt.Pattern.SOLID_PATTERN
     pattern.pattern_fore_colour = xlwt.Style.colour_map['yellow']
     style.pattern = pattern
-    sheet.write(0, 6, total_value, style)
+    sheet.write(0, column_index, total_value, style)
     # Write head
     for col, head in enumerate(dataframe.columns):
         sheet.write(1, col, head)
@@ -123,7 +124,8 @@ def create_folder_and_place_filtred_dataframe(
     create_folder_if_not_exist(folder_path)
     dataframe = dataframe[dataframe[column_name] == distinct_value]
     total = dataframe[sumarize_column].sum(numeric_only=True)
-    export_dataframe_to_xls(dataframe, file_path, total)
+    index = dataframe.columns.to_list().index(sumarize_column)
+    export_dataframe_to_xls(dataframe, file_path, total, index)
     return dataframe
 
 def show_popup_error(message: str) -> None:
