@@ -168,7 +168,23 @@ if __name__ == '__main__':
     check_if_folder_or_file_exist(tax_table_filepath)
     tax_table_dataframe = get_dataframe_from_excel(tax_table_filepath, 'Planilha1')
     base_directory = os.path.dirname(filepath)
-    dataframe = get_dataframe_from_excel(filepath, configs['planilha'])
+    dataframe = pandas.DataFrame()
+    for key in configs:
+        try:
+            dataframe = get_dataframe_from_excel(filepath, configs[key]['planilha'])
+            configs = configs[configs[key]['nome']]
+            break
+        except KeyError:
+            pass
+    dataframe = dataframe.dropna(axis=0, how='all')
+    if len(dataframe) == 0:
+        show_popup_error('Não foi encontrada planilha com o nome especificado!')
+        raise InvalidFileException()
+    difference_between_columns = list(set(dataframe.columns.to_list()) - set(configs['colunas']))
+    if difference_between_columns:
+        show_popup_error(f'O tipo da planilha encontrado `{configs['nome']}` não corresponde com as colunas esperadas!\n\nColunas que não batem: {difference_between_columns}')
+        raise InvalidFileException()
+    print(f'MODO DE OPERAÇÃO: {configs['nome']}')
     dataframe = pandas.merge(left=dataframe, right=tax_table_dataframe, how='left', left_on=configs['juncoes'][0], right_on=configs['juncoes'][1])
     dataframe_with_null_values = dataframe[dataframe['ALÍQUOTA'].isnull()]
     if len(dataframe_with_null_values) != 0:
@@ -181,4 +197,4 @@ if __name__ == '__main__':
     base_directory = os.path.join(base_directory, configs['nome'])
     create_folder_if_not_exist(base_directory)
     recursive_split_and_export(dataframe, configs['criterios'], base_directory, configs['sumarizar'])
-    show_popup_info(f'Relatórios exportados em {base_directory}')
+    show_popup_info(f'Relatórios exportados em {base_directory} no modo de operação {configs['nome']}!')
