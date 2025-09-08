@@ -2,6 +2,7 @@
 ''' Module to  '''
 import os
 import sys
+import json
 from tkinter import messagebox
 from tkinter import filedialog
 import xlwt
@@ -154,6 +155,10 @@ def recursive_split_and_export(
 
 if __name__ == '__main__':
     print_header_presentation()
+    configuration_filepath = os.path.join(BASE_FOLDER, 'AndreWorkSheetSpliter.json')
+    check_if_folder_or_file_exist(configuration_filepath)
+    with open(configuration_filepath, mode='r', encoding='utf8') as file:
+        configs = json.load(file)
     filepath = sys.argv[1] if len(sys.argv) > 1 else filedialog.askopenfilename()
     check_if_folder_or_file_exist(filepath)
     if not filepath.lower().split('.')[-1] in {'xlsx', 'xlsm'}:
