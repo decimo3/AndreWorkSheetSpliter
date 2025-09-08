@@ -2,9 +2,7 @@
 XLSX_SPLITER version ${MAJOR_VERSION}.${MINOR_VERSION}.${PATCH_VERSION}
 ```
 
-1. Improved code to dinamically create folders and files;
-2. Add configuration to handle with more that one criteria;
-3. Add `xlsm` to list of file types accepted by program;
+Fixed column index of sumarize value
 
 
 ## SHA256 Checksums
