@@ -169,10 +169,10 @@ if __name__ == '__main__':
     tax_table_dataframe = get_dataframe_from_excel(tax_table_filepath, 'Planilha1')
     base_directory = os.path.dirname(filepath)
     dataframe = pandas.DataFrame()
-    for key in configs:
+    for config in configs:
         try:
-            dataframe = get_dataframe_from_excel(filepath, configs[key]['planilha'])
-            configs = configs[configs[key]['nome']]
+            dataframe = get_dataframe_from_excel(filepath, config['planilha'])
+            configs = config
             break
         except KeyError:
             pass
