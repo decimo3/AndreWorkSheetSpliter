@@ -168,22 +168,17 @@ if __name__ == '__main__':
     check_if_folder_or_file_exist(tax_table_filepath)
     tax_table_dataframe = get_dataframe_from_excel(tax_table_filepath, 'Planilha1')
     base_directory = os.path.dirname(filepath)
-    dataframe = get_dataframe_from_excel(filepath, 'Lista_Pedidos')
-    dataframe = pandas.merge(left=dataframe, right=tax_table_dataframe, how='left', left_on='Municipio', right_on='MUNICÍPIO')
+    dataframe = get_dataframe_from_excel(filepath, configs['planilha'])
+    dataframe = pandas.merge(left=dataframe, right=tax_table_dataframe, how='left', left_on=configs['juncoes'][0], right_on=configs['juncoes'][1])
     dataframe_with_null_values = dataframe[dataframe['ALÍQUOTA'].isnull()]
     if len(dataframe_with_null_values) != 0:
-        show_popup_error(f'Há valores nulos no relacionamento!\n{dataframe_with_null_values['Municipio']}')
+        show_popup_error(f'Há valores nulos no relacionamento!\n{dataframe_with_null_values[configs['juncoes'][0]]}')
         raise RelationshipException()
-    dataframe = dataframe[['Contrato', 'Codigo', 'NumeroConformidade',
-        'DescricaoServico', 'Quantidade', 'ValorUnitario', 'ValorTotal',
-        'CodigoLeiComp', 'ALÍQUOTA', 'Municipio', 'DomicilioFiscal', 'GrupoComprador',
-        'DescricaoGrupoComprador', 'ProvedorDescricao', 'Posicao', 'CodigoBaremo',
-        'DescricaoBaremo', 'CodigoOrdem', 'Estado', 'MotivoRecusa']]
+    dataframe = dataframe[configs['colunas_final']]
     dataframe = dataframe.rename(columns={'ALÍQUOTA': 'ISS'})
     base_directory = os.path.join(base_directory, 'AMPLA')
     create_folder_if_not_exist(base_directory)
-    base_directory = os.path.join(base_directory, 'COMERCIAL')
+    base_directory = os.path.join(base_directory, configs['nome'])
     create_folder_if_not_exist(base_directory)
-    criteria = ['CodigoLeiComp', 'Municipio', 'NumeroConformidade']
-    recursive_split_and_export(dataframe, criteria, base_directory)
+    recursive_split_and_export(dataframe, configs['criterios'], base_directory, configs['sumarizar'])
     show_popup_info(f'Relatórios exportados em {base_directory}')
