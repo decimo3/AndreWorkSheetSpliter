@@ -156,7 +156,7 @@ if __name__ == '__main__':
     print_header_presentation()
     filepath = sys.argv[1] if len(sys.argv) > 1 else filedialog.askopenfilename()
     check_if_folder_or_file_exist(filepath)
-    if not filepath.lower().endswith('.xlsx'):
+    if not filepath.lower().split('.')[-1] in {'xlsx', 'xlsm'}:
         show_popup_error(f'O arquivo {filepath} não é válido!')
         raise InvalidFileException()
     tax_table_filepath = os.path.join(BASE_FOLDER, 'ISS.xlsx')
