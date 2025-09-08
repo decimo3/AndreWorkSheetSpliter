@@ -2,10 +2,9 @@
 XLSX_SPLITER version ${MAJOR_VERSION}.${MINOR_VERSION}.${PATCH_VERSION}
 ```
 
-1. add check if there are null values in the column that came from the relationship.
-2. add yellow highlight to total value information on first row
-3. add file open dialog when file is not specified on program argument
-4. replace terminal error message by message box on user interface
+1. Improved code to dinamically create folders and files;
+2. Add configuration to handle with more that one criteria;
+3. Add `xlsm` to list of file types accepted by program;
 
 
 ## SHA256 Checksums
