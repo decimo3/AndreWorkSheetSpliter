@@ -138,7 +138,8 @@ def show_popup_info(message: str) -> None:
 def recursive_split_and_export(
         dataframe: pandas.DataFrame,
         column_names: list,
-        base_directory: str
+        base_directory: str,
+        sumarize_column: str
     ) -> None:
     ''' Function to recursively split dataframe and export based on column_names '''
     if not column_names:
@@ -147,9 +148,9 @@ def recursive_split_and_export(
     is_last = len(column_names) == 1
     distinct_values = get_distinct_list_from_dataframe_column(dataframe, current_column)
     for value in distinct_values:
-        filtered_df = create_folder_and_place_filtred_dataframe(dataframe, current_column, value, base_directory, create_directory = not is_last)
+        filtered_df = create_folder_and_place_filtred_dataframe(dataframe, current_column, value, base_directory, sumarize_column, create_directory = not is_last)
         next_directory = os.path.join(base_directory, str(value)) if not is_last else base_directory
-        recursive_split_and_export(filtered_df, column_names[1:], next_directory)
+        recursive_split_and_export(filtered_df, column_names[1:], next_directory, sumarize_column)
 
 if __name__ == '__main__':
     print_header_presentation()
