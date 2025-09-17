@@ -16,5 +16,14 @@
         "colunas_final": ["CONTRATO", "N_PEDIDO", "MIGO", "QUANT", "VALOR_UNIT", "VALOR_TOTAL", "MUNICIPIO", "ALÍQUOTA", "NCM", "COD_PARCEIRA", "PARCEIRA", "CECO", "AREA", "BASE", "SOB", "ORDEM", "MOTIVO_INVESTIMENTO", "PROJETO_ESPECIAL", "BAREMO", "TEXTO_BREVE", "N_MEDICAO", "DATA_INGRESSO", "NUM_NF", "DATA_VENCIMENTO", "DATA_PAGAMENTO", "DIAS VENCIDOS / DIAS A VENCER", "TIPO", "N_TAREFA_GOM", "GOM/FORAGOM", "DATA_INICIO_OBRA", "DATA_ENVIO_SAP", "MES_INGRESSO", "ANO_INGRESSO", "STATUS_PAGAMENTO", "SITUACAO_PAGAMENTO", "CONFIRMACAO_COMPRA_BAREMADA", "DATA_APTA_FISC"],
         "criterios": ["NCM", "MUNICIPIO", "MIGO"],
         "sumarizar": "VALOR_TOTAL"
+    },
+    {
+        "nome": "COMERCIAL",
+        "planilha": "Cs_Pedidos-Município",
+        "colunas": ["Gr. Comp", "Contrato ", "Fornecedor", "Pedidos", "Valor", "Descrição do Serviço", "IDOC Enviado", "Status Certificação", "NCM", "Cód#domicílio fiscal", "Município", "Conformidade", "Ano", "Mês", "ContarDeItem"],
+        "juncoes": ["Município", "MUNICÍPIO"],
+        "colunas_final": ["Contrato ", "Pedidos","Conformidade", "Valor", "Município", "ALÍQUOTA", "NCM", "Descrição do Serviço", "Gr. Comp", "IDOC Enviado", "Status Certificação", "Fornecedor", "Cód#domicílio fiscal",  "Ano", "Mês", "ContarDeItem"],
+        "criterios": ["NCM", "Município", "Conformidade"],
+        "sumarizar": "Valor"
     }
 ]
