@@ -17,7 +17,7 @@ Pygments==2.19.2
 pyinstaller==6.15.0
 pyinstaller-hooks-contrib==2025.8
 pylint==3.3.8
-pytest==8.4.1
+pytest==9.0.3
 python-dateutil==2.9.0.post0
 pytz==2025.2
 pywin32-ctypes==0.2.3
