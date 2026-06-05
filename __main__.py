@@ -119,7 +119,7 @@ def create_folder_and_place_filtred_dataframe(
     # Filtra o dataframe pelo valor distinto no critério
     dataframe = dataframe[dataframe[column_name] == distinct_value]
     # Troca valores inválidos por espaço no nome do arquivo
-    distinct_value = distinct_value.replace('/',' ')
+    distinct_value = str(distinct_value).replace('/',' ')
     if create_directory:
         folder_path = os.path.join(directory_path, str(distinct_value))
     else:
