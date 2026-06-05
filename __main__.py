@@ -116,13 +116,16 @@ def create_folder_and_place_filtred_dataframe(
         create_directory: bool = True
         ) -> pandas.DataFrame:
     ''' Function to create folder from distinct values and place a filtred dataframe '''
+    # Filtra o dataframe pelo valor distinto no critério
+    dataframe = dataframe[dataframe[column_name] == distinct_value]
+    # Troca valores inválidos por espaço no nome do arquivo
+    distinct_value = distinct_value.replace('/',' ')
     if create_directory:
         folder_path = os.path.join(directory_path, str(distinct_value))
     else:
         folder_path = directory_path
     file_path = os.path.join(folder_path, str(distinct_value) + '.xls')
     create_folder_if_not_exist(folder_path)
-    dataframe = dataframe[dataframe[column_name] == distinct_value]
     total = dataframe[sumarize_column].sum(numeric_only=True)
     index = dataframe.columns.to_list().index(sumarize_column)
     export_dataframe_to_xls(dataframe, file_path, total, index)
