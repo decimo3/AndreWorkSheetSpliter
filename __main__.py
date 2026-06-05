@@ -194,8 +194,6 @@ if __name__ == '__main__':
         raise RelationshipException()
     dataframe = dataframe[configs['colunas_final']]
     dataframe = dataframe.rename(columns={'ALÍQUOTA': 'ISS'})
-    base_directory = os.path.join(base_directory, 'AMPLA')
-    create_folder_if_not_exist(base_directory)
     base_directory = os.path.join(base_directory, configs['nome'])
     create_folder_if_not_exist(base_directory)
     recursive_split_and_export(dataframe, configs['criterios'], base_directory, configs['sumarizar'])
